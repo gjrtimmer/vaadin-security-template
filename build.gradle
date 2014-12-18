@@ -1,0 +1,105 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+              url 'http://nexus.localhost/content/groups/public/'
+			  url 'http://maven.vaadin.com/vaadin-addons'
+        }
+		mavenLocal()
+        mavenCentral()
+    }
+    
+    dependencies {
+        classpath 'fi.jasoft.plugin:gradle-vaadin-plugin:+'
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:+'
+    }
+}
+
+apply plugin: 'fi.jasoft.plugin.vaadin'
+apply plugin: 'spring-boot'
+apply plugin: 'war'
+apply plugin: 'eclipse'
+apply plugin: 'eclipse-wtp'
+
+
+webAppDirName = 'src/main/webapp'
+sourceCompatibility=1.8
+targetCompatibility=1.8
+
+ext {
+	
+	springBootVersion 		= '1.2.0.RELEASE'
+	springVaadinVersion		= '0.0.4-SNAPSHOT'
+		
+}
+
+vaadin {
+    version = '7.3.6'
+    manageDependencies = true
+    manageRepositories = true
+	
+}
+
+eclipse {
+    classpath {
+        downloadSources = true
+        downloadJavadoc = true
+    }
+}
+
+configurations {
+	provided
+}
+
+sourceSets {
+	main { compileClasspath += configurations.provided }
+}
+
+dependencies {
+    compile         'joda-time:joda-time:+'
+    compile         'org.apache.commons:commons-lang3:+'
+	compile         'org.apache.commons:commons-collections4:+'
+   
+	compile('org.springframework.boot:spring-boot-starter-web:'+springBootVersion) {
+		exclude([group: 'org.eclipse.jetty'])
+		exclude module: 'spring-boot-starter-jetty'
+	}
+	compile         'org.springframework.boot:spring-boot-starter-tomcat:'+springBootVersion
+    compile         'org.springframework.boot:spring-boot-starter-security:'+springBootVersion
+    compile         'org.springframework.boot:spring-boot-starter-actuator:'+springBootVersion
+    
+    compile         'org.vaadin.spring:spring-boot-vaadin:'+springVaadinVersion
+    compile         'org.vaadin.spring:spring-vaadin-security:'+springVaadinVersion
+    compile         'org.vaadin.spring:spring-vaadin-mvp:'+springVaadinVersion
+    
+	compile			'com.vaadin:vaadin-server:'+vaadin.version
+	compile			'com.vaadin:vaadin-themes:'+vaadin.version
+	compile('com.vaadin:vaadin-client:'+vaadin.version) {
+    	exclude([group: 'org.eclipse.jetty'])
+	}
+	compile('com.vaadin:vaadin-client-compiled:'+vaadin.version) {
+		exclude([group: 'org.eclipse.jetty'])
+	}
+	compile('com.vaadin:vaadin-client-compiler:'+vaadin.version) {
+		exclude([group: 'org.eclipse.jetty'])
+	}
+	compile('com.vaadin:vaadin-themes:'+vaadin.version) {
+		exclude([group: 'org.eclipse.jetty'])
+	}
+	
+	compile			'org.vaadin.addons:formsender:+'
+	
+	compile			'javax.inject:javax.inject:+'
+	compile			'javax.servlet:javax.servlet-api:3.1.0'
+	compile			'javax.servlet:jstl:1.2'
+	compile			'org.apache.tomcat.embed:tomcat-embed-jasper:+'
+	
+    testCompile     'junit:junit:+'
+	testCompile		'org.springframework.boot:spring-boot-starter-test:'+springBootVersion
+	testCompile		'org.vaadin.spring:spring-vaadin-test:'+springVaadinVersion
+}
+
+task cleanWidgetset(type: Delete) {
+	delete webAppDirName+'/VAADIN/widgetsets'
+}
+
