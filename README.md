@@ -14,11 +14,11 @@ Used technologies:
 NOTE: The style for the login view comes from: https://github.com/vaadin/dashboard-demo/
 
 Login
- USER:
+- USER:
    - username: user
    - password: user
    - ROLE: USER
- ADMIN:
+- ADMIN:
    - username: admin
    - password: admin
    - ROLE: ADMIN
