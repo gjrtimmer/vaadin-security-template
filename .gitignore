@@ -13,3 +13,8 @@ hs_err_pid*
 src/main/webapp/VAADIN/themes/login/styles.css
 src/main/webapp/VAADIN/themes/main/styles.css
 src/main/webapp/VAADIN/widgetsets/*
+/build/
+.classpath
+.project
+.gradle/*
+.settings/*
