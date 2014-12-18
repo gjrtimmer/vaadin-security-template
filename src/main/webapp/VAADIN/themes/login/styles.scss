@@ -1,0 +1,9 @@
+@import "addons.scss";
+@import "login.scss";
+
+/* This file prefixes all rules with the theme name to avoid causing conflicts with other themes. */
+/* The actual styles should be defined in login.scss */
+.login {
+  @include addons;
+  @include login;
+}

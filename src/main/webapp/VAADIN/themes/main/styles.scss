@@ -1,0 +1,9 @@
+@import "addons.scss";
+@import "main.scss";
+
+/* This file prefixes all rules with the theme name to avoid causing conflicts with other themes. */
+/* The actual styles should be defined in vaadin-security.scss */
+.dashboard {
+  @include addons;
+  @include main;
+}
